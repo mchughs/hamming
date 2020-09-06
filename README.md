@@ -1,1 +1,1 @@
-# hamming
+# Hamming Codes
