@@ -100,9 +100,10 @@
   [message]
   (if-let [num-parity-bits (hamming-block-size message)]
     (let [block-template    (create-hamming-block-template message num-parity-bits)
-          parity-bit-target (utils/find-parity-bit-target-settings block-template)
-          parity-bits       (int->binary-vec parity-bit-target num-parity-bits)]
+          parity-bit-target (-> block-template
+                                utils/find-parity-bit-target-settings
+                                (int->binary-vec num-parity-bits))]
       (->> block-template
-           ((partial update-parity-bits parity-bits))
+           ((partial update-parity-bits parity-bit-target))
            update-meta-parity-bit))
     :error/improper-message-length))
